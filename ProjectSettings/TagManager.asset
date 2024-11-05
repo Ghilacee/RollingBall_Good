@@ -8,6 +8,8 @@ TagManager:
   - CambioCamara
   - camaraPlayer
   - camaraCenital
+  - ZonaReinicio
+  - Suelo
   layers:
   - Default
   - TransparentFX
