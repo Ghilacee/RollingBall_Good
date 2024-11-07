@@ -10,6 +10,8 @@ TagManager:
   - camaraCenital
   - ZonaReinicio
   - Suelo
+  - Mazo
+  - Martillo
   layers:
   - Default
   - TransparentFX

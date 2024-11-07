@@ -46,10 +46,23 @@ public class Player : MonoBehaviour
     {
         bool resultado = Physics.Raycast(transform.position, Vector3.down, distanciaRaycast);
         Debug.DrawRay(transform.position, Vector3.down * distanciaRaycast, Color.red, 2f);
-        return resultado;   
+        return resultado;
+    }
+    
+   
+    private void OnCollisionEnter(Collision collision)
+    {
+       
+        if (collision.gameObject.CompareTag("Martillo"))
+        {
+            Destroy(gameObject);
+        }
     }
 
-
-
-
+    
+  
 }
+
+
+
+
