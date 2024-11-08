@@ -12,6 +12,8 @@ TagManager:
   - Suelo
   - Mazo
   - Martillo
+  - sierraKiller
+  - Tablones
   layers:
   - Default
   - TransparentFX

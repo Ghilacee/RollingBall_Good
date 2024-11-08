@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monedas : MonoBehaviour
+public class PelotaKiller : MonoBehaviour
 {
-   
-    float Velocidad = 0.01f;
+    float Velocidad = 0.1f;
     [SerializeField] Vector3 direccion;
     float Timer = 0;
 
@@ -19,7 +18,7 @@ public class Monedas : MonoBehaviour
     {
         transform.Translate(direccion.normalized * Velocidad * Time.deltaTime);
         Timer += Time.deltaTime;
-        if (Timer > 0.3f)
+        if (Timer > 3f)
         {
             direccion = -direccion;
 

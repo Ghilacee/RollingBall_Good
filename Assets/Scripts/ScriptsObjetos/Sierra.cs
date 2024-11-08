@@ -6,7 +6,7 @@ public class Sierra : MonoBehaviour
 {
    
     [SerializeField] private Vector3 direccionR = new Vector3(0, 1, 0); // Eje de rotación
-    [SerializeField] private float fuerzaR = 3f; // Incrementa el valor si la rotación es muy débil
+    [SerializeField] private float fuerzaR = 2f; // Incrementa el valor si la rotación es muy débil
 
     private Rigidbody rb;
 
