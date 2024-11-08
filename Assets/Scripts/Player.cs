@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Player : MonoBehaviour
@@ -16,6 +18,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private int puntos;
     [SerializeField] private int vida = 5;
+    [SerializeField] TMP_Text textoVida;
     
     //OBJETO DAÑINO
     private bool enObjetoDanino = false; // Si el jugador está en el objeto dañino
@@ -86,9 +89,12 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("sierraKiller"))
         {
+            vida -= 5;
+            textoVida.SetText("Vida: " + vida);
             Destroy(gameObject);
-        }
+            ReiniciarPartida();
 
+        }
 
         //OBJETO DAÑINO
         if (collision.gameObject.CompareTag("Tablones"))
@@ -105,7 +111,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Moneda"))
         {
             puntos += 1;
-        }
+            Destroy(other.gameObject);        }
 
        
     }
@@ -118,6 +124,12 @@ public class Player : MonoBehaviour
         {
             enObjetoDanino = false;
         }
+    }
+   
+    private void ReiniciarPartida()
+    {
+        // Recarga la escena actual
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
 

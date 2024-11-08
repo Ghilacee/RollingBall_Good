@@ -11,7 +11,7 @@ public class ParedCubos : MonoBehaviour
     
     void Start()
     {
-        
+      
     }
 
     // Update is called once per frame
@@ -20,26 +20,28 @@ public class ParedCubos : MonoBehaviour
         if (iniciarTimer == true)
         {
             timer += 1 * Time.unscaledDeltaTime;
-            if (timer >= 2)
+            if (timer >= 1)
             {
                Time.timeScale = 1;
                 for (int i = 0; i < rbs.Length; i++)
                 {
+
                     rbs[i].useGravity = true;
-                
+                    rbs[i].isKinematic = false;
+
                 }
-            
             
             }
 
-
-
-
-        
         }
 
-
-
-
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player")) // Asegúrate de que el objeto que colisiona tenga el tag "Player"
+        {
+            Time.timeScale = 0.1f;
+            iniciarTimer = true; // Activa el temporizador
+        }
     }
 }
