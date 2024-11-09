@@ -10,8 +10,6 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
 
     [SerializeField] private float fuerzaMovimiento = 1.5f;
-    //[SerializeField] float direccion = 20f;
-    //[SerializeField] Vector3 movimiento;
     [SerializeField] private float distanciaRaycast;
     private float h, v;
     Rigidbody rb;
@@ -19,20 +17,23 @@ public class Player : MonoBehaviour
     [SerializeField] private int puntos;
     [SerializeField] private int vida = 5;
     [SerializeField] TMP_Text textoVida;
-    
+    [SerializeField] TMP_Text textoPuntos;
+
     //OBJETO DAÑINO
-    private bool enObjetoDanino = false; // Si el jugador está en el objeto dañino
+    private bool enObjetoDanino = false; 
     private float tiempoSiguienteDano;
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        ActualizarHUD();
     }
 
     // Update is called once per frame
     void Update()
     {
+        VerificarMuerte();
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
         
@@ -47,20 +48,21 @@ public class Player : MonoBehaviour
         if (puntos > 5)
         {
             vida += 1;
-            puntos -= 5; 
-          // por cada 5 puntos ganas 1 de vida 
+            puntos -= 5;
+            
+            ActualizarHUD();
         }
 
-        //OBJETO DAÑINO
+        
         if (enObjetoDanino && Time.time >= tiempoSiguienteDano)
         {
             vida -= 2;                             
-            tiempoSiguienteDano = Time.time + 5f;   
-            Debug.Log("Vida actual: " + vida);
+            tiempoSiguienteDano = Time.time + 5f;
+            ActualizarHUD();
 
-            if (vida <= 0)
+            if (vida >= 0)
             {
-                Debug.Log("Game Over");
+                Morir();
                
             }
         }
@@ -87,20 +89,25 @@ public class Player : MonoBehaviour
         {
             vida -= 1;
         }
+        if (collision.gameObject.CompareTag("PinchosKiller"))
+        {
+            vida -= 3;
+        }
         if (collision.gameObject.CompareTag("sierraKiller"))
         {
             vida -= 5;
             textoVida.SetText("Vida: " + vida);
-            Destroy(gameObject);
-            ReiniciarPartida();
-
+           
+            Morir();
         }
 
-        //OBJETO DAÑINO
+
+
+        
         if (collision.gameObject.CompareTag("Tablones"))
         {
             enObjetoDanino = true;
-            tiempoSiguienteDano = Time.time + 5f; // Inicia el temporizador de daño
+            tiempoSiguienteDano = Time.time + 5f; 
         }
     }
 
@@ -118,18 +125,41 @@ public class Player : MonoBehaviour
     }
 
 
-    private void OnCollisionExit(Collision collision)
+    //private void OnCollisionExit(Collision collision)
+    //{
+        
+    ////    if (collision.gameObject.CompareTag("Tablones"))
+    //    {
+    //        enObjetoDanino = false;
+    //    }
+    //}
+   
+   
+    private void ActualizarHUD()
     {
-        // Detiene el daño continuo cuando el jugador sale del objeto dañino
-        if (collision.gameObject.CompareTag("Tablones"))
+       
+        textoVida.SetText("Vida: " + vida);
+        textoPuntos.SetText("Vida: " + puntos);
+    }
+    private void VerificarMuerte()
+    {
+        
+        if (vida <= 0)
         {
-            enObjetoDanino = false;
+            Morir();
         }
     }
-   
+
+    private void Morir()
+    {
+
+        Destroy(gameObject);
+        ReiniciarPartida();  
+    }
+    
     private void ReiniciarPartida()
     {
-        // Recarga la escena actual
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
