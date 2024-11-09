@@ -16,6 +16,7 @@ TagManager:
   - Tablones
   - canvasInicio
   - textoVida
+  - PinchosKiller
   layers:
   - Default
   - TransparentFX

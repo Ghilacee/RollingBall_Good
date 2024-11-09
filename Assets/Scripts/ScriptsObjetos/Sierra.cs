@@ -5,8 +5,8 @@ using UnityEngine;
 public class Sierra : MonoBehaviour
 {
    
-    [SerializeField] private Vector3 direccionR = new Vector3(0, 1, 0); // Eje de rotación
-    [SerializeField] private float fuerzaR = 0.2f; // Incrementa el valor si la rotación es muy débil
+    [SerializeField] private Vector3 direccionR = new Vector3(0, -1, 0); // Eje de rotación
+    [SerializeField] private float fuerzaR = 0.03f; // Incrementa el valor si la rotación es muy débil
 
     private Rigidbody rb;
 

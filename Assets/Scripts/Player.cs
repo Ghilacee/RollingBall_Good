@@ -111,7 +111,8 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Moneda"))
         {
             puntos += 1;
-            Destroy(other.gameObject);        }
+            Destroy(other.gameObject);        
+        }
 
        
     }

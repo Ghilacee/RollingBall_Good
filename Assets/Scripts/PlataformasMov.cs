@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pinchis_Izq : MonoBehaviour
+public class PlataformasMov : MonoBehaviour
 {
-    // Start is called before the first frame update
-    float Velocidad = 0.1f;
+    float Velocidad = 0.3f;
     [SerializeField] Vector3 direccion;
     float Timer = 0f;
 
@@ -19,7 +18,7 @@ public class Pinchis_Izq : MonoBehaviour
     {
         transform.Translate(direccion.normalized * Velocidad * Time.deltaTime);
         Timer += Time.deltaTime;
-        if (Timer > 0.8f)
+        if (Timer > 2f)
         {
             direccion = -direccion;
 
