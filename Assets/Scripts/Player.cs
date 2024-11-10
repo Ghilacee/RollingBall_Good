@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("sierraKiller"))
         {
-            vida -= 5;
+            vida = 0;
             ActualizarHUD();
 
 
@@ -179,6 +179,7 @@ public class Player : MonoBehaviour
         
         if (vida <= 0)
         {
+            vida = 0;
             Morir();
         }
     }
