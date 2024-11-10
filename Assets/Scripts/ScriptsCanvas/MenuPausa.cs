@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class MenuPausa : MonoBehaviour
 {
     [SerializeField] private GameObject panelPausa; // Panel de pausa
-    [SerializeField] private Button botonPausa;     // Botón de pausa en la UI
+    [SerializeField] private Button botonPausa;
+    [SerializeField] private Button botonContinuar; // Botón de pausa en la UI
     private bool juegoPausado = false;
 
     void Start()
@@ -16,6 +17,7 @@ public class MenuPausa : MonoBehaviour
 
         // Asocia el evento del botón con el método PausarJuego
         botonPausa.onClick.AddListener(TogglePausa);
+        botonContinuar.onClick.AddListener(ReanudarJuego);
     }
 
     // Esta función alterna entre pausar o reanudar el juego
