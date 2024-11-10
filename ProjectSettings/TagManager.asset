@@ -17,6 +17,10 @@ TagManager:
   - canvasInicio
   - textoVida
   - PinchosKiller
+  - Barrera
+  - Acha
+  - Sierrecillas
+  - Victoria
   layers:
   - Default
   - TransparentFX

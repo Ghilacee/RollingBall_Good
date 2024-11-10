@@ -14,10 +14,15 @@ public class Player : MonoBehaviour
     private float h, v;
     Rigidbody rb;
 
-    [SerializeField] private int puntos;
+    public GameObject perderPanel;
+
+    
+
+    [SerializeField] private int puntos = 0;
     [SerializeField] private int vida = 5;
     [SerializeField] TMP_Text textoVida;
     [SerializeField] TMP_Text textoPuntos;
+    [SerializeField] private GameObject cartelVictoria;
 
     //OBJETO DAÑINO
     private bool enObjetoDanino = false; 
@@ -26,11 +31,15 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+       perderPanel.SetActive(false);
+        cartelVictoria.SetActive(false);
+
         rb = GetComponent<Rigidbody>();
         ActualizarHUD();
+
+       
     }
 
-    // Update is called once per frame
     void Update()
     {
         VerificarMuerte();
@@ -57,16 +66,15 @@ public class Player : MonoBehaviour
         if (enObjetoDanino && Time.time >= tiempoSiguienteDano)
         {
             vida -= 2;                             
-            tiempoSiguienteDano = Time.time + 5f;
+            tiempoSiguienteDano = Time.time + 3f;
             ActualizarHUD();
 
-            if (vida >= 0)
-            {
-                Morir();
-               
-            }
+           
         }
     }
+
+
+
     private void FixedUpdate()
     {
         rb.AddForce(new Vector3(h, 0, v).normalized * fuerzaMovimiento, ForceMode.Force);
@@ -88,28 +96,55 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Martillo"))
         {
             vida -= 1;
+            ActualizarHUD();
         }
         if (collision.gameObject.CompareTag("PinchosKiller"))
         {
             vida -= 3;
+            ActualizarHUD();
         }
         if (collision.gameObject.CompareTag("sierraKiller"))
         {
             vida -= 5;
-            textoVida.SetText("Vida: " + vida);
-           
+            ActualizarHUD();
+
+
             Morir();
         }
+        if (collision.gameObject.CompareTag("Sierrecillas"))
+        {
+            vida -= 1;
+            ActualizarHUD();
+        }
+        if (collision.gameObject.CompareTag("Acha"))
+        {
+            vida -= 3;
+            ActualizarHUD();
+        }
 
+        if (collision.gameObject.CompareTag("Barrera"))
+        {
+            vida -= 1;
+            ActualizarHUD();
+        }
 
-
-        
         if (collision.gameObject.CompareTag("Tablones"))
         {
             enObjetoDanino = true;
-            tiempoSiguienteDano = Time.time + 5f; 
+            tiempoSiguienteDano = Time.time + 3f;
+            ActualizarHUD();
         }
     }
+  
+    private void OnCollisionExit(Collision collision)
+    {
+        // Desactivar daño periódico al salir del objeto dañino
+        if (collision.gameObject.CompareTag("Tablones"))
+        {
+            enObjetoDanino = false;
+        }
+    }
+
 
 
     private void OnTriggerEnter(Collider other)
@@ -118,28 +153,26 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Moneda"))
         {
             puntos += 1;
-            Destroy(other.gameObject);        
+            Destroy(other.gameObject);
+            ActualizarHUD();
+        }
+        if (other.gameObject.CompareTag("Victoria"))
+        {
+            
+            ActivarVictoria();
         }
 
-       
     }
 
 
-    //private void OnCollisionExit(Collision collision)
-    //{
-        
-    ////    if (collision.gameObject.CompareTag("Tablones"))
-    //    {
-    //        enObjetoDanino = false;
-    //    }
-    //}
    
    
     private void ActualizarHUD()
     {
        
         textoVida.SetText("Vida: " + vida);
-        textoPuntos.SetText("Vida: " + puntos);
+        textoPuntos.SetText("Puntos: " + puntos);
+        VerificarMuerte();
     }
     private void VerificarMuerte()
     {
@@ -153,13 +186,20 @@ public class Player : MonoBehaviour
     private void Morir()
     {
 
-        Destroy(gameObject);
-        ReiniciarPartida();  
+        gameObject.SetActive(false);
+        perderPanel.SetActive(true);
+        Time.timeScale = 0f;
+       
     }
-    
-    private void ReiniciarPartida()
+    private void ActivarVictoria()
     {
-        
+        cartelVictoria.SetActive(true); // Muestra el cartel de victoria
+        Time.timeScale = 0f; // Pausa el juego
+    }
+
+    public void ReiniciarPartida()
+    {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
